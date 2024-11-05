@@ -1,50 +1,56 @@
-.Model Small
-.Stack 100h
-.Data
-    arr db 1, -2, 4, -3, 5, -7, -9, -1, 3, 2
+.model small
+.stack 100h
+.data 
+    arr db -11, 2, 3, -4, 5, 6, -7, 8, 9, -10
     sum db 0
-    num db 10 dup('$')
-.Code
+.code
 main proc
     mov ax, @Data
     mov ds, ax
-      
-    lea si, arr; load dia chi cua arr len si
-    mov cx, 10; dat cx = 10 (so phan tu cua mang)
-    ; Vong lap tinh tong cac gia tri am (Tri tuyet doi)
-lp1:
-    lodsb ; chuyen gia tri 1 byte cua thanh ghi si -> al
-    cmp al, 0; so sanh al voi gia tri 0
-    jge pass ; nhay den vong lap moi neu al >= 0
-    mov bl, 0; gan bl = 0
-    sub bl, al; gan bl = bl - al hay bl = -al
-    add sum, bl; cong don bl vao sum
-pass:
-    loop lp1
     
-    ;Xu ly ket qua thanh 1 chuoi de in ra man hinh
     mov ax, 0
-    mov al, sum
-    mov bl, 10
-    ;in ra dau am
+    lea si, arr
+    mov cx, 10
+tong:
+    lodsb
+    cmp al, 0
+    jge pass
+    mov bl, 0
+    sub bl, al 
+    add sum, bl
+pass:
+    loop tong
+    
     mov dl, '-'
     mov ah, 2
     int 21h
-    ; Bat dau so thanh xau ki tu
-    mov al, sum
-lp2:
-    mov bl, 10
-    div bl
-    mov dl, ah
-    add dl, '0'
-    mov ah, 2
-    int 21h  
+    
     mov ah, 0
-    mov al, al
-    cmp al, 0
-    jne lp2
-end_lp2: 
+    mov al, sum
+    call print
+    
     mov ah, 4ch
     int 21h
-main endp
-end
+main endp  
+
+print proc
+    mov bx, 10
+    mov cx, 0
+chia:
+    mov dx, 0
+    div bx
+    push dx
+    inc cx
+    cmp ax, 0
+    je hienthi
+    jmp chia
+hienthi:
+    pop dx
+    add dl, '0'
+    mov ah, 2
+    int 21h
+    dec cx
+    cmp cx, 0
+    jne hienthi
+    ret
+print endp
