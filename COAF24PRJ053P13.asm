@@ -7,15 +7,15 @@
 .model small
 .stack 100h
 .data 
-    char db 'C'
+    char db 'A'
 .code
 main proc
     mov ax, @Data
     mov ds, ax   
    
-    cmp char, 'Z'; so sanh ki tu voi ki tu 'Z'
-    jle print    ; in ra luon neu la ki tu in hoa
-    sub char, 32 ; neu khong thi phai tru di 32
+    cmp char, 'Z'
+    jle print    
+    sub char, 32
 print:
     mov dl, char
     mov ah, 2
