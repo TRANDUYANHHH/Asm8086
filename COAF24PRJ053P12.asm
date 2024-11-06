@@ -1,3 +1,9 @@
+;---------------------------------- In ra man hinh sau ki tu theo dieu kien -----------------------------------
+; Ngo Quy Truong Giang - B23DCAT080
+; Tran Duy Anh - B23DCAT020
+; Vu Do Phuong Dong - B23DCAT045
+; Le Hong Son - B23DCAT260
+
 .model Small
 
 .stack 100h
@@ -12,12 +18,11 @@
 main proc
     mov ax, @Data
     mov ds, ax
-   
-    ; In ye^u cau' ra man' hinh'
+    ; In ra xau ki tu yeu cau
     mov ah, 9
     lea dx, msg
     int 21h
-    ;Nha^p du? lie^u vao thanh ghi AL
+    ; Nhap du lieu vao thanh ghi AL
     mov ah, 1
     int 21h
     mov datain, al ;Chuyen du lieu thanh ghi al vao bien datain 
@@ -25,8 +30,8 @@ main proc
     mov ah, 9
     lea dx, endline
     int 21h
-    sub datain, '0'
-    jz VIETNAM
+    cmp datain, '0'; So sanh du lieu voi ki tu '0'
+    je VIETNAM ; Nhay neu bang
     
     mov ah, 9
     lea dx, chao2
