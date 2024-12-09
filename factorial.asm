@@ -1,3 +1,6 @@
+;Author: tranDuyAnh
+;created: 9.12.2024
+
 .model small
 .stack 100h
 .data    
